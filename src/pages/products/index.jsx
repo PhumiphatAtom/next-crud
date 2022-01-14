@@ -13,7 +13,7 @@ function Products() {
         {Array(11)
           .fill(null)
           .map((item, index) => (
-            <CardProduct></CardProduct>
+            <CardProduct key={index}></CardProduct>
           ))}
       </div>
     </div>
