@@ -1,6 +1,14 @@
 import React from "react";
 
 function EditProduct() {
+  const [formData, setFormData] = useState({
+    name: "123",
+    description: "",
+    price: "",
+    img_url: "",
+    quantity: "",
+  });
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-4/12">
@@ -11,6 +19,7 @@ function EditProduct() {
               <span className="label-text text-xl">Name</span>
             </label>
             <input
+            value={formData.name}
               type="text"
               placeholder="Enter Product Name.."
               className="input input-info input-bordered"

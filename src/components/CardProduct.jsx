@@ -1,28 +1,30 @@
+import NextLink from "next/link";
 import React from "react";
 
-function CardProduct() {
+function CardProduct({ product }) {
   return (
-    <div className="m-8">
-      <div className="card card-bordered">
+    <NextLink href={`/products/info/${product._id}`}>
+      <div className="card card-bordered shadow-lg">
         <figure>
           <img src="https://picsum.photos/id/1005/400/250" />
         </figure>
-        <div className="card-body">
-          <h2 className="card-title">
-            Top image
-            <div className="badge mx-2 badge-secondary">NEW</div>
-          </h2>
-          <p>
-            Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. Sit
-            sit necessitatibus veritatis sed molestiae voluptates incidunt iure
-            sapiente.
-          </p>
-          <div className="justify-end card-actions">
-            <button className="btn btn-secondary">More info</button>
+        <div className="card-body justify-between p-4">
+          <div>
+            <h2 className="card-title">
+              {product.name}
+              <div className="badge mx-2 badge-secondary">NEW</div>
+            </h2>
+            <p className="line-clamp-2">{product.description}</p>
+            <div className="text-secondary font-bold text-md mt-2">
+              {product.price.toLocaleString("th-TH", {
+                style: "currency",
+                currency: "THB",
+              })}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </NextLink>
   );
 }
 
