@@ -14,3 +14,13 @@ export async function getProductById(_id) {
   const res = await axios.get(`/product/${_id}`);
   return res.data;
 }
+
+export async function editProductBy_id(_id, data) {
+  const res = await axios.put(`/product/${_id}/`, data);
+  return res.data;
+}
+
+export async function delProductBy_id(_id) {
+  const res = await axios.delete(`/product/${_id}/`);
+  return res.data;
+}

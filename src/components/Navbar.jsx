@@ -6,8 +6,8 @@ function Header() {
     <div className="mb-2 shadow-lg bg-neutral text-neutral-content fixed w-screen z-50">
       <div className="navbar max-w-4xl mx-auto">
         <div className="px-2 mx-2 navbar-start">
-          <span className="text-lg font-bold text-secondary">
-            AT<span className="text-base text-white">SHOP</span>
+          <span className="text-3xl font-bold text-secondary">
+            AT<span className="text-2xl text-white">SHOP</span>
           </span>
         </div>
         <div className="hidden px-2 mx-2 navbar-center lg:flex">

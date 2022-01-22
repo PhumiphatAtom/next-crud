@@ -1,7 +1,6 @@
-import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { getProductById } from "../../../api/product.api";
+import { delProductBy_id, editProductBy_id, getProductById } from "../../../api/product.api";
 
 function ProductInfo() {
   const router = useRouter();
@@ -15,15 +14,35 @@ function ProductInfo() {
     quantity: "",
   });
 
+  function handleChange(e) {
+    const value = e.target.value;
+    setFormData({
+      ...formData,
+      [e.target.name]: value,
+    });
+  }
+
+  async function handleSubmitDel() {
+    const res = await delProductBy_id(router.query._id);
+    router.push("/products")
+    console.log("handleSubmitDel : ", res.statusCode);
+  }
+
+  async function handleSubmitEdit() {
+    const res = await editProductBy_id(router.query._id, formData);
+    setProduct(res.data);
+    // console.log("handleSubmitEdit" , res);
+  }
+
   async function fetchProduct() {
     const res = await getProductById(router.query._id);
     setProduct(res.data);
+    setFormData(res.data);
     // console.log(res.data);
   }
   useEffect(() => {
     if (router.query._id) {
       fetchProduct();
-      
     }
 
     return () => {};
@@ -31,9 +50,9 @@ function ProductInfo() {
 
   return (
     <div>
-      <div className="card lg:card-side card-bordered">
+      <div className="card lg:card-side card-bordered w-8/12 mx-auto my-40">
         <figure>
-          <img src="https://picsum.photos/id/1005/400/250" />
+          <img src={product.img_url} />
         </figure>
         <div className="card-body">
           <h2 className="card-title">
@@ -48,13 +67,17 @@ function ProductInfo() {
             })}
           </div>
           <div className="card-actions">
-            <label for="my-modal" class="btn btn-primary modal-button">
+            <label htmlFor="my-modal" className="btn btn-primary modal-button">
               Edit
             </label>
-            <button className="btn btn-ghost">Delete</button>
+            <button className="btn btn-ghost" onClick={handleSubmitDel}>
+              Delete
+            </button>
           </div>
         </div>
       </div>
+
+      {/* ***************** Modal ****************** */}
 
       <div>
         <input type="checkbox" id="my-modal" className="modal-toggle" />
@@ -71,7 +94,7 @@ function ProductInfo() {
                   placeholder="Enter Product Name.."
                   className="input input-info input-bordered"
                   name="name"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                 />
                 {/* <label className="label">
               <span className="label-text-alt">Please enter data</span>
@@ -86,7 +109,7 @@ function ProductInfo() {
                   className="textarea h-24 textarea-bordered textarea-success resize-none"
                   placeholder="Enter Description.."
                   name="description"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                 ></textarea>
                 {/* <label className="label">
               <span className="label-text-alt">Data is valid</span>
@@ -102,7 +125,7 @@ function ProductInfo() {
                   placeholder="Enter product price.."
                   className="input input-warning input-bordered"
                   name="price"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                 />
                 {/* <label className="label">
               <span className="label-text-alt">
@@ -120,7 +143,7 @@ function ProductInfo() {
                   placeholder="Enter quantity.."
                   className="input input-accent input-bordered"
                   name="quantity"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                 />
                 {/* <label className="label">
               <span className="label-text-alt">Data is incorrect</span>
@@ -136,7 +159,7 @@ function ProductInfo() {
                   placeholder="Enter image url.."
                   className="input input-error input-bordered"
                   name="img_url"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                 />
                 {/* <label className="label">
               <span className="label-text-alt">Data is incorrect</span>
@@ -144,7 +167,13 @@ function ProductInfo() {
               </div>
             </div>
             <div className="modal-action">
-              <label htmlFor="my-modal" className="btn btn-primary">
+              <label
+                htmlFor="my-modal"
+                className="btn btn-primary"
+                onClick={() => {
+                  handleSubmitEdit();
+                }}
+              >
                 Accept
               </label>
               <label htmlFor="my-modal" className="btn">

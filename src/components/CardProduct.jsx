@@ -4,9 +4,9 @@ import React from "react";
 function CardProduct({ product }) {
   return (
     <NextLink href={`/products/info/${product._id}`}>
-      <div className="card card-bordered shadow-lg">
+      <div className="card rounded-none cursor-pointer hover:transform hover:scale-110 duration-200">
         <figure>
-          <img src="https://picsum.photos/id/1005/400/250" />
+          <img src={product.img_url} />
         </figure>
         <div className="card-body justify-between p-4">
           <div>
