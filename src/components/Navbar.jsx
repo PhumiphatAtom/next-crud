@@ -1,7 +1,15 @@
-import React from "react";
-import NextLink from "next/link";
+import React from 'react';
+import NextLink from 'next/link';
+import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/router';
 
 function Header() {
+  const router = useRouter();
+  const [, , removeCookie] = useCookies(['token']);
+  const handleLogout = () => {
+    removeCookie('token');
+    router.replace('/login');
+  };
   return (
     <div className="mb-2 shadow-lg bg-neutral text-neutral-content fixed w-screen z-50">
       <div className="navbar max-w-4xl mx-auto">
@@ -12,18 +20,18 @@ function Header() {
         </div>
         <div className="hidden px-2 mx-2 navbar-center lg:flex">
           <div className="flex items-stretch">
-            <NextLink href={"/products"}>
+            <NextLink href={'/products'}>
               <a className="btn btn-ghost btn-sm rounded-btn">Home</a>
             </NextLink>
-            <NextLink href={"/products/add"}>
+            <NextLink href={'/products/add'}>
               <a className="btn btn-ghost btn-sm rounded-btn">Add Products</a>
             </NextLink>
             <a className="btn btn-ghost btn-sm rounded-btn">About</a>
             <a
               className="btn btn-ghost btn-sm rounded-btn"
               onClick={() => {
-                const footerElement = document.getElementById("footer");
-                footerElement.scrollIntoView({ behavior: "smooth" });
+                const footerElement = document.getElementById('footer');
+                footerElement.scrollIntoView({ behavior: 'smooth' });
               }}
             >
               Contact
@@ -61,24 +69,25 @@ function Header() {
               />
             </svg>
           </button>
-          <NextLink href={"/login"}>
-          <button className="btn btn-square btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-              />
-            </svg>
-          </button>
+          <NextLink href={'/login'}>
+            <button className="btn btn-square btn-ghost">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                />
+              </svg>
+            </button>
           </NextLink>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       </div>
     </div>
