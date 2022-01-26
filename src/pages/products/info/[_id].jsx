@@ -193,7 +193,7 @@ function ProductInfo() {
 }
 
 ProductInfo.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
+  return <Layout checkAuth={true}>{page}</Layout>;
 };
 
 export default ProductInfo;

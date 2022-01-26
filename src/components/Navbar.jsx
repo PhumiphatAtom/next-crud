@@ -5,9 +5,10 @@ import { useRouter } from 'next/router';
 
 function Header() {
   const router = useRouter();
-  const [, , removeCookie] = useCookies(['token']);
+  const [, , removeCookie] = useCookies(['token', 'user']);
   const handleLogout = () => {
     removeCookie('token');
+    removeCookie('user');
     router.replace('/login');
   };
   return (

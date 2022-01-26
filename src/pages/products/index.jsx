@@ -30,6 +30,6 @@ function Products() {
   );
 }
 Products.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
+  return <Layout checkAuth={false}>{page}</Layout>;
 };
 export default Products;
