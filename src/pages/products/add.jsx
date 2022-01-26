@@ -5,6 +5,7 @@ import { addProduct } from "../../api/product.api";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../../schemas/product.schema";
+import Layout from "../../components/layout";
 
 function AddProduct() {
   const router = useRouter();
@@ -160,5 +161,9 @@ function AddProduct() {
     </div>
   );
 }
+
+AddProduct.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
 
 export default AddProduct;

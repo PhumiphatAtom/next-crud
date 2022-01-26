@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import CardProduct from "../../components/CardProduct";
-import { getProducts } from "../../api/product.api";
+import React, { useEffect, useState } from 'react';
+import CardProduct from '../../components/CardProduct';
+import { getProducts } from '../../api/product.api';
+import Layout from '../../components/layout';
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -28,5 +29,7 @@ function Products() {
     </div>
   );
 }
-
+Products.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
 export default Products;

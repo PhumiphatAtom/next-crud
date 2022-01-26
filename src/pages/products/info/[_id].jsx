@@ -1,17 +1,22 @@
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { delProductBy_id, editProductBy_id, getProductById } from "../../../api/product.api";
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import {
+  delProductBy_id,
+  editProductBy_id,
+  getProductById,
+} from '../../../api/product.api';
+import Layout from '../../../components/layout';
 
 function ProductInfo() {
   const router = useRouter();
 
   const [product, setProduct] = useState({});
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    img_url: "",
-    quantity: "",
+    name: '',
+    description: '',
+    price: '',
+    img_url: '',
+    quantity: '',
   });
 
   function handleChange(e) {
@@ -24,8 +29,8 @@ function ProductInfo() {
 
   async function handleSubmitDel() {
     const res = await delProductBy_id(router.query._id);
-    router.push("/products")
-    console.log("handleSubmitDel : ", res.statusCode);
+    router.push('/products');
+    console.log('handleSubmitDel : ', res.statusCode);
   }
 
   async function handleSubmitEdit() {
@@ -61,9 +66,9 @@ function ProductInfo() {
           </h2>
           <p>{product.description}</p>
           <div className="text-secondary font-bold text-md mt-2">
-            {product.price?.toLocaleString("th-TH", {
-              style: "currency",
-              currency: "THB",
+            {product.price?.toLocaleString('th-TH', {
+              style: 'currency',
+              currency: 'THB',
             })}
           </div>
           <div className="card-actions">
@@ -186,5 +191,9 @@ function ProductInfo() {
     </div>
   );
 }
+
+ProductInfo.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
 
 export default ProductInfo;
