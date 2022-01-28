@@ -1,15 +1,17 @@
-import Navbar from './Navbar';
-import Footer from './Footer';
-import { useCookies } from 'react-cookie';
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { useCookies } from "react-cookie";
 
 export default function Layout({ checkAuth, children }) {
-  const [cookies] = useCookies(['user', 'token']);
+  const [cookies] = useCookies(["user", "token"]);
   if (process.browser && checkAuth) {
+    console.log(cookies);
     if (!cookies.user || !cookies.token) {
-      window.location.href = '/login';
+      window.location.href = "/login";
       return <></>;
     }
   }
+
   return (
     <>
       <Navbar />

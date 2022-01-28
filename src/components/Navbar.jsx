@@ -1,16 +1,17 @@
-import React from 'react';
-import NextLink from 'next/link';
-import { useCookies } from 'react-cookie';
-import { useRouter } from 'next/router';
+import React from "react";
+import NextLink from "next/link";
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/router";
 
 function Header() {
   const router = useRouter();
-  const [, , removeCookie] = useCookies(['token', 'user']);
+  const [cookies, , removeCookie] = useCookies(["token", "user"]);
   const handleLogout = () => {
-    removeCookie('token');
-    removeCookie('user');
-    router.replace('/login');
+    removeCookie("token");
+    removeCookie("user");
+    router.replace("/login");
   };
+
   return (
     <div className="mb-2 shadow-lg bg-neutral text-neutral-content fixed w-screen z-50">
       <div className="navbar max-w-4xl mx-auto">
@@ -21,18 +22,18 @@ function Header() {
         </div>
         <div className="hidden px-2 mx-2 navbar-center lg:flex">
           <div className="flex items-stretch">
-            <NextLink href={'/products'}>
+            <NextLink href={"/products"}>
               <a className="btn btn-ghost btn-sm rounded-btn">Home</a>
             </NextLink>
-            <NextLink href={'/products/add'}>
+            <NextLink href={"/products/add"}>
               <a className="btn btn-ghost btn-sm rounded-btn">Add Products</a>
             </NextLink>
             <a className="btn btn-ghost btn-sm rounded-btn">About</a>
             <a
               className="btn btn-ghost btn-sm rounded-btn"
               onClick={() => {
-                const footerElement = document.getElementById('footer');
-                footerElement.scrollIntoView({ behavior: 'smooth' });
+                const footerElement = document.getElementById("footer");
+                footerElement.scrollIntoView({ behavior: "smooth" });
               }}
             >
               Contact
@@ -70,25 +71,48 @@ function Header() {
               />
             </svg>
           </button>
-          <NextLink href={'/login'}>
-            <button className="btn btn-square btn-ghost">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                />
-              </svg>
-            </button>
-          </NextLink>
-          <button onClick={handleLogout}>Logout</button>
+          {cookies.user ? (
+            <>
+              {/* <div className="avatar">
+                <div className="rounded-full h-10 w-10">
+                  <img src="http://daisyui.com/tailwind-css-component-profile-2@56w.png" />
+                </div>
+              </div> */}
+              <button className="dropdown dropdown-hover">
+                <div tabindex="0" className="m-1 btn w-max">
+                  <div className="avatar">
+                    <div className="rounded-full h-10 w-10">
+                      <img src="http://daisyui.com/tailwind-css-component-profile-2@56w.png" />
+                    </div>
+                  </div>
+                </div>
+                <ul
+                  tabindex="0"
+                  className="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52"
+                >
+                  <div className="text-black font-bold cursor-default flex ml-5">
+                    {cookies.user.username}
+                  </div>
+                  <div className="divider my-0"></div>
+                  <li>
+                    <a>
+                      <div className="text-black font-medium">Profile</div>
+                    </a>
+                  </li>
+                  {/* <div className="divider my-0"></div> */}
+                  <li>
+                    <a onClick={handleLogout}>
+                      <div className="text-black font-medium">Sign out</div>
+                    </a>
+                  </li>
+                </ul>
+              </button>
+            </>
+          ) : (
+            <NextLink href={"/login"}>
+              <button>Sign In</button>
+            </NextLink>
+          )}
         </div>
       </div>
     </div>
